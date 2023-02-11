@@ -11,7 +11,7 @@ To use weigthed-trie, add the following to your Cargo.toml file:
 
 ```toml
 [dependencies]
-weighted_trie = "0.1"  # NOTE: Replace to latest minor version.
+weighted_trie = "0.1.0"  # NOTE: Replace to latest minor version.
 ```
 
 ### Usage overview

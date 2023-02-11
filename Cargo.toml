@@ -1,0 +1,15 @@
+[package]
+name = "weighted_trie"
+version = "0.1.0"
+edition = "2021"
+authors = ["Alexander Osipenko <mr.aosipenko@gmail.com>"]
+description = "Weighted prefix trie for autosuggestions"
+readme = "README.md"
+license = "Apache-2.0"
+repository = "https://github.com/subpath/weighted_trie"
+homepage = "https://github.com/subpath/weighted_trie"
+keywords = ["trie", "weighted-trie", "autocomplete"] # up to 5 keywords, each keyword should have <= 20 chars
+categories = ["compression", "data-structures"]
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]

@@ -15,7 +15,7 @@
 //! use weighted_trie::WeightedTrie;
 //!
 //! fn main() {
-//!    let mut trie = trie::WeightedTrie::new();
+//!    let mut trie = WeightedTrie::new();
 //!     // build trie with words and assoicated weights
 //!     trie.insert("pie".to_owned(), 5);
 //!     trie.insert("pita".to_owned(), 2);

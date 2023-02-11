@@ -1,4 +1,3 @@
-//! # weighted_trie
 //! 🦀 Rust crate that allows to create weighted prefix trees that can be used in autocomplete
 //!
 //! ## Quickstart
@@ -17,12 +16,13 @@
 //!
 //! fn main() {
 //!    let mut trie = trie::WeightedTrie::new();
-//!
+//!     // build trie with words and assoicated weights
 //!     trie.insert("pie".to_owned(), 5);
 //!     trie.insert("pita".to_owned(), 2);
 //!     trie.insert("pi".to_owned(), 1);
 //!     trie.insert("pizza".to_owned(), 10);
-//!
+//!     
+//!     // get prefix based suggestions sorted by weight
 //!     let suggestions = trie.search("pi");
 //!     assert_eq!(suggestions, vec!["pizza", "pie", "pita", "pi"]);
 //!

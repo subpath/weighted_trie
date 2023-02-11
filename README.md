@@ -50,7 +50,7 @@ and then run `cargo readme > README.md`.
 ### TODO:
 1. Add tests
 2. Measure memory footprint
-3. Benrchmark lookup speed
+3. Benchmark lookup speed
 4. Benchmark insert speed
 5. Try low hanging fruit optimizations like usage of `hashbrown` instead of standart HashMap
 

@@ -1,4 +1,4 @@
-//! 🦀 Rust crate that allows to create weighted prefix trees that can be used in autocomplete
+//! 🦀 Rust crate that allows creating weighted prefix trees that can be used in autocomplete
 //!
 //! ## Quickstart
 //! To use weigthed-trie, add the following to your Cargo.toml file:
@@ -40,6 +40,12 @@
 //! `README.md` is generated from `cargo readme` command.
 //! Do not manually update `README.md` instead edit `src/lib.rs`
 //! and then run `cargo readme > README.md`.
+//!
+//! ## TODO:
+//! 1. Measure memory footprint
+//! 2. Benrchmark lookup speed
+//! 3. Try low hanging fruit optimizations like usage of `hashbrown` instead of standart HashMap
+//!
 //!
 //! ## License
 pub use trie::WeightedTrie;

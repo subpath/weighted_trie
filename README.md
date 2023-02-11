@@ -39,7 +39,7 @@ fn main() {
 
 ```
 ### Guidelines
-`README.md` is generated from $ cargo readme command.
+`README.md` is generated from `cargo readme` command.
 Do not manually update `README.md` instead edit `src/lib.rs`
 and then run `cargo readme > README.md`.
 

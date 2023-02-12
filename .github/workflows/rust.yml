@@ -15,6 +15,8 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
+      - name: Load benchmark data
+        run: wget https://gist.githubusercontent.com/subpath/c19778c9549e5dde02a405dd97fa7014/raw/6fe9433996607be9ceca6dc29e1d88582d64f5d1/weighted_strings.txt -P /tmp/data/benchmark
       - name: Build
         run: cargo build --verbose
       - name: Run tests

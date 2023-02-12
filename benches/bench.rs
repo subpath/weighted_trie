@@ -13,7 +13,7 @@ lazy_static! {
         let path = Path::new("/tmp/data/benchmark/weighted_strings.txt");
         let contens: String = fs::read_to_string(&path).unwrap();
         let mut trie = weighted_trie::WeightedTrie::new();
-        for line in contens.lines() {
+        for line in contens.lines().take(100000) {
             let line_splitted: Vec<&str> = line.split('\t').collect();
             let string = line_splitted[0].to_owned();
             let weight = line_splitted[1].parse::<i32>().unwrap();
@@ -24,16 +24,18 @@ lazy_static! {
 }
 
 fn insert() {
+    let path = Path::new("/tmp/data/benchmark/weighted_strings.txt");
+    let contens: String = fs::read_to_string(&path).unwrap();
     let mut trie = weighted_trie::WeightedTrie::new();
-    trie.insert("pie".to_owned(), 5);
-    trie.insert("pita".to_owned(), 2);
-    trie.insert("pi".to_owned(), 1);
-    trie.insert("pizza".to_owned(), 10);
-    trie.insert("pineapples".to_owned(), 1);
-    trie.insert("pistachios".to_owned(), 4);
+    for line in contens.lines().take(100000) {
+        let line_splitted: Vec<&str> = line.split('\t').collect();
+        let string = line_splitted[0].to_owned();
+        let weight = line_splitted[1].parse::<i32>().unwrap();
+        trie.insert(string, weight);
+    }
 }
 
-fn create_and_lookup() {
+fn lookup() {
     TRIE.search("pi");
     TRIE.search("pis");
     TRIE.search("p");
@@ -41,8 +43,10 @@ fn create_and_lookup() {
 }
 
 fn criterion_benchmark(c: &mut Criterion) {
-    c.bench_function("insert", |b| b.iter(|| insert()));
-    c.bench_function("lookup", |b| b.iter(|| create_and_lookup()));
+    let mut group = c.benchmark_group("weighted_trie");
+    group.sample_size(10);
+    group.bench_function("insert", |b| b.iter(|| insert()));
+    group.bench_function("lookup", |b| b.iter(|| lookup()));
 }
 
 criterion_group!(benches, criterion_benchmark);

@@ -13,3 +13,11 @@ categories = ["compression", "data-structures"]
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
+
+[dev-dependencies]
+criterion = "0.4.0"
+lazy_static = "1.4.0"
+
+[[bench]]
+name = "bench"
+harness = false

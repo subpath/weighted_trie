@@ -45,8 +45,10 @@ fn main() {
 ### Benchmarks
 Using 100k weighted strings
 
-`weighted_trie/insert    time:   [342.41 ms 343.86 ms 345.56 ms]`
-`weighted_trie/lookup    time:   [1.8608 ms 1.9351 ms 2.0834 ms]`
+```rust
+weighted_trie/insert    time:   [342.41 ms 343.86 ms 345.56 ms]
+weighted_trie/lookup    time:   [1.8608 ms 1.9351 ms 2.0834 ms]
+```
 
 ### Guidelines
 `README.md` is generated from `cargo readme` command.

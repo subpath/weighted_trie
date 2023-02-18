@@ -6,9 +6,23 @@ extern crate weighted_trie;
 use criterion::{criterion_group, criterion_main, Criterion};
 use std::fs;
 use std::path::Path;
+use weighted_trie::WeightedString;
 use weighted_trie::WeightedTrie;
 
 lazy_static! {
+    static ref DATA: Vec<WeightedString> = {
+        let mut data = Vec::new();
+        let path = Path::new("/tmp/data/benchmark/weighted_strings.txt");
+        let contens: String = fs::read_to_string(&path).unwrap();
+        for line in contens.lines().take(100000) {
+            let line_splitted: Vec<&str> = line.split('\t').collect();
+            data.push(WeightedString {
+                word: line_splitted[0].to_owned(),
+                weight: line_splitted[1].parse::<i32>().unwrap(),
+            })
+        }
+        data
+    };
     static ref TRIE: WeightedTrie = {
         let path = Path::new("/tmp/data/benchmark/weighted_strings.txt");
         let contens: String = fs::read_to_string(&path).unwrap();
@@ -44,11 +58,27 @@ fn lookup() {
     TRIE.search("pineapple");
 }
 
+fn build() {
+    let mut data = Vec::new();
+    let path = Path::new("/tmp/data/benchmark/weighted_strings.txt");
+    let contens: String = fs::read_to_string(&path).unwrap();
+    for line in contens.lines().take(100000) {
+        let line_splitted: Vec<&str> = line.split('\t').collect();
+        data.push(WeightedString {
+            word: line_splitted[0].to_owned(),
+            weight: line_splitted[1].parse::<i32>().unwrap(),
+        })
+    }
+
+    let _trie = WeightedTrie::build(data);
+}
+
 fn criterion_benchmark(c: &mut Criterion) {
     let mut group = c.benchmark_group("weighted_trie");
     group.sample_size(10);
     group.bench_function("insert", |b| b.iter(|| insert()));
     group.bench_function("lookup", |b| b.iter(|| lookup()));
+    group.bench_function("build", |b| b.iter(|| build()));
 }
 
 criterion_group!(benches, criterion_benchmark);

@@ -42,12 +42,42 @@ fn main() {
 }
 
 ```
+Alternatively you can use `.build`  method
+
+```rust
+fn main() {
+    let weighted_strings = vec![
+           WeightedString {
+               word: "pie".to_owned(),
+               weight: 5,
+           },
+           WeightedString {
+               word: "pita".to_owned(),
+               weight: 2,
+           },
+           WeightedString {
+               word: "pi".to_owned(),
+               weight: 1,
+           },
+           WeightedString {
+               word: "pizza".to_owned(),
+               weight: 10,
+           },
+       ];
+
+    let trie = WeightedTrie::build(weighted_strings);
+
+}
+
+```
+
 ### Benchmarks
 Using 100k weighted strings
 
 ```
 weighted_trie/insert    time:   [342.41 ms 343.86 ms 345.56 ms]
 weighted_trie/lookup    time:   [1.8608 ms 1.9351 ms 2.0834 ms]
+weighted_trie/build     time:   [326.27 ms 330.74 ms 337.03 ms]
 ```
 
 ### Guidelines

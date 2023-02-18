@@ -22,7 +22,7 @@ pub struct WeightedTrie {
 
 pub struct WeightedString {
     word: String,
-    weight: i32
+    weight: i32,
 }
 
 impl WeightedTrie {
@@ -34,9 +34,9 @@ impl WeightedTrie {
 
     pub fn build(weighted_strings: Vec<WeightedString>) -> WeightedTrie {
         let mut trie = WeightedTrie::new();
-        weighted_strings.into_iter().for_each(|ws| {
-            trie.insert(ws.word, ws.weight)
-        }); 
+        weighted_strings
+            .into_iter()
+            .for_each(|ws| trie.insert(ws.word, ws.weight));
         trie
     }
 

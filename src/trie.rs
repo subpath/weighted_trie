@@ -21,8 +21,8 @@ pub struct WeightedTrie {
 }
 
 pub struct WeightedString {
-    word: String,
-    weight: i32,
+    pub word: String,
+    pub weight: i32,
 }
 
 impl WeightedTrie {

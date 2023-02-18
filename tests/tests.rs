@@ -2,7 +2,7 @@ extern crate weighted_trie;
 
 #[cfg(test)]
 mod tests {
-    use weighted_trie::{WeightedTrie, trie::WeightedString};
+    use weighted_trie::{trie::WeightedString, WeightedTrie};
 
     #[test]
     fn test_weighted_trie_insert() {
@@ -26,15 +26,26 @@ mod tests {
 
     #[test]
     fn test_build_weighted_trie() {
-
         let weighted_strings = vec![
-            WeightedString {word: "pie".to_owned(), weight: 5},
-            WeightedString {word: "pita".to_owned(), weight: 2},
-            WeightedString {word: "pi".to_owned(), weight: 1},
-            WeightedString {word: "pizza".to_owned(), weight: 10},
+            WeightedString {
+                word: "pie".to_owned(),
+                weight: 5,
+            },
+            WeightedString {
+                word: "pita".to_owned(),
+                weight: 2,
+            },
+            WeightedString {
+                word: "pi".to_owned(),
+                weight: 1,
+            },
+            WeightedString {
+                word: "pizza".to_owned(),
+                weight: 10,
+            },
         ];
-        
-       let trie = WeightedTrie::build(weighted_strings);
+
+        let trie = WeightedTrie::build(weighted_strings);
 
         // get prefix based suggestions sorted by weight
         let suggestions = trie.search("pi");

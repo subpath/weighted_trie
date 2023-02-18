@@ -24,6 +24,8 @@ lazy_static! {
 }
 
 fn insert() {
+    // Note: to get a benchmark data
+    // wget https://gist.githubusercontent.com/subpath/c19778c9549e5dde02a405dd97fa7014/raw/6fe9433996607be9ceca6dc29e1d88582d64f5d1/weighted_strings.txt -P /tmp/data/benchmark
     let path = Path::new("/tmp/data/benchmark/weighted_strings.txt");
     let contens: String = fs::read_to_string(&path).unwrap();
     let mut trie = weighted_trie::WeightedTrie::new();

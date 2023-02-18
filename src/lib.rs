@@ -43,6 +43,8 @@
 //! Alternatively you can use `.build`  method
 //!
 //! ```rust
+//! use weighted_trie::{WeightedString, WeightedTrie};
+//!
 //! fn main() {
 //!     let weighted_strings = vec![
 //!            WeightedString {

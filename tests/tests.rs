@@ -1,9 +1,6 @@
-extern crate weighted_trie;
-
 #[cfg(test)]
 mod tests {
-    use weighted_trie::{trie::WeightedString, WeightedTrie};
-
+    use weighted_trie::{WeightedString, WeightedTrie};
     #[test]
     fn test_weighted_trie_insert() {
         let mut trie = WeightedTrie::new();

@@ -1,17 +1,16 @@
 use std::cmp::Reverse;
-use std::collections::BinaryHeap;
 use std::collections::HashMap;
 
 pub struct TrieNode {
     pub children: HashMap<char, Box<TrieNode>>,
-    pub suggestions: BinaryHeap<Reverse<(i32, String)>>,
+    pub suggestions: Vec<(i32, String)>,
 }
 
 impl TrieNode {
     pub fn new() -> TrieNode {
         TrieNode {
             children: HashMap::new(),
-            suggestions: BinaryHeap::new(),
+            suggestions: Vec::new(),
         }
     }
 }
@@ -47,7 +46,11 @@ impl WeightedTrie {
                 .children
                 .entry(c)
                 .or_insert_with(|| Box::new(TrieNode::new()));
-            node.suggestions.push(Reverse((weight, word.clone())));
+            let pos = node
+                .suggestions
+                .binary_search_by_key(&Reverse(weight), |&(w, _)| Reverse(w))
+                .unwrap_or_else(|x| x);
+            node.suggestions.insert(pos, (weight, word.clone()));
         }
     }
 
@@ -61,13 +64,9 @@ impl WeightedTrie {
             }
         }
 
-        let mut suggestions: Vec<(i32, String)> = node
-            .suggestions
+        node.suggestions
             .iter()
-            .map(|Reverse((weight, word))| (weight.to_owned(), word.to_owned()))
-            .collect();
-
-        suggestions.sort_by_key(|k| Reverse(k.0));
-        suggestions.iter().map(|k| k.1.clone()).collect()
+            .map(|(_, word)| word.clone())
+            .collect()
     }
 }

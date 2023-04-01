@@ -75,9 +75,9 @@
 //! Using 100k weighted strings
 //!
 //! ```text
-//! weighted_trie/insert    time:   [342.41 ms 343.86 ms 345.56 ms]
-//! weighted_trie/lookup    time:   [1.8608 ms 1.9351 ms 2.0834 ms]
-//! weighted_trie/build     time:   [326.27 ms 330.74 ms 337.03 ms]
+//! weighted_trie/insert    time:   [374.13 ms 377.97 ms 382.13 ms]
+//! weighted_trie/lookup    time:   [709.69 µs 725.45 µs 751.34 µs]
+//! weighted_trie/build     time:   [375.60 ms 380.36 ms 385.45 ms]
 //! ```
 //!
 //! ## Guidelines

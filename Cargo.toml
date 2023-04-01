@@ -1,6 +1,6 @@
 [package]
 name = "weighted_trie"
-version = "0.1.3"
+version = "0.1.4"
 edition = "2021"
 authors = ["Alexander Osipenko <mr.aosipenko@gmail.com>"]
 description = "Weighted prefix trie for autosuggestions"

@@ -182,6 +182,13 @@ fn main() {
     println!("║{:^58}║", "WEIGHTED TRIE - ACCURATE MEMORY BENCHMARK");
     println!("╚{:═<58}╝", "");
 
+    // Check if running in CI environment
+    let is_ci = std::env::var("CI").is_ok();
+
+    if is_ci {
+        println!("\n⚠️  Running in CI mode - skipping large datasets\n");
+    }
+
     benchmark_memory(
         "/tmp/data/benchmark/weighted_strings.txt",
         10_000,
@@ -194,23 +201,27 @@ fn main() {
         "Medium Dataset (50K)",
     );
 
-    benchmark_memory(
-        "/tmp/data/benchmark/weighted_strings.txt",
-        100_000,
-        "Large Dataset (100K)",
-    );
+    if !is_ci {
+        benchmark_memory(
+            "/tmp/data/benchmark/weighted_strings.txt",
+            100_000,
+            "Large Dataset (100K)",
+        );
 
-    benchmark_memory(
-        "/tmp/data/benchmark/weighted_strings_1m.txt",
-        500_000,
-        "Extra Large Dataset (500K)",
-    );
+        benchmark_memory(
+            "/tmp/data/benchmark/weighted_strings_1m.txt",
+            500_000,
+            "Extra Large Dataset (500K)",
+        );
 
-    benchmark_memory(
-        "/tmp/data/benchmark/weighted_strings_1m.txt",
-        1_000_000,
-        "Massive Dataset (1M)",
-    );
+        benchmark_memory(
+            "/tmp/data/benchmark/weighted_strings_1m.txt",
+            1_000_000,
+            "Massive Dataset (1M)",
+        );
+    } else {
+        println!("\n⏭️  Skipped: 100K, 500K, and 1M datasets (CI mode)\n");
+    }
 
     println!("\n{:=<60}", "");
     println!("Benchmark complete!");

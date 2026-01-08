@@ -5,8 +5,16 @@ use std::fs;
 use weighted_trie::{WeightedString, WeightedTrie};
 
 const BENCHMARK_FILE: &str = "/tmp/data/benchmark/weighted_strings.txt";
-const WORD_COUNT: usize = 100_000;
 const MB: usize = 1_024 * 1_024;
+
+// Use smaller dataset in CI to avoid memory issues
+fn get_word_count() -> usize {
+    if std::env::var("CI").is_ok() {
+        10_000 // CI mode: use 10K words
+    } else {
+        100_000 // Local mode: use 100K words
+    }
+}
 
 fn load_data(limit: usize) -> Vec<WeightedString> {
     fs::read_to_string(BENCHMARK_FILE)
@@ -24,16 +32,17 @@ fn load_data(limit: usize) -> Vec<WeightedString> {
 }
 
 lazy_static! {
-    static ref TRIE: WeightedTrie = WeightedTrie::build(load_data(WORD_COUNT));
-    static ref DATA: Vec<WeightedString> = load_data(WORD_COUNT);
+    static ref WORD_COUNT: usize = get_word_count();
+    static ref TRIE: WeightedTrie = WeightedTrie::build(load_data(*WORD_COUNT));
+    static ref DATA: Vec<WeightedString> = load_data(*WORD_COUNT);
 }
 
 fn insert_single() {
     let mut trie = WeightedTrie::new();
-    trie.insert("test_word".to_owned(), 100);
+    trie.insert("test_word", 100);
 }
 
-fn insert_100k() {
+fn insert_bulk() {
     let mut trie = WeightedTrie::new();
     for WeightedString { word, weight } in DATA.iter() {
         trie.insert(word.clone(), *weight);
@@ -46,7 +55,7 @@ fn lookup() {
     }
 }
 
-fn build_100k() {
+fn build_bulk() {
     let _ = WeightedTrie::build(DATA.clone());
 }
 
@@ -63,7 +72,7 @@ fn memory_footprint() {
     println!("  Physical: {} MB", usage_before.physical_mem / MB);
     println!("  Virtual:  {} MB", usage_before.virtual_mem / MB);
 
-    let _trie = WeightedTrie::build(load_data(WORD_COUNT));
+    let _trie = WeightedTrie::build(load_data(*WORD_COUNT));
 
     if let Some(usage_after) = memory_stats() {
         println!("\nMemory after building trie:");
@@ -82,6 +91,15 @@ fn memory_footprint() {
 }
 
 fn criterion_benchmark(c: &mut Criterion) {
+    let is_ci = std::env::var("CI").is_ok();
+    let word_count = *WORD_COUNT;
+
+    if is_ci {
+        println!("\n⚠️  Running benchmarks in CI mode with {} words\n", word_count);
+    } else {
+        println!("\n✓ Running benchmarks with {} words\n", word_count);
+    }
+
     let mut group = c.benchmark_group("weighted_trie");
 
     // Single insert benchmark - high sample size for accuracy
@@ -89,9 +107,9 @@ fn criterion_benchmark(c: &mut Criterion) {
 
     // Bulk operations - lower sample size
     group.sample_size(10);
-    group.bench_function("insert_100k", |b| b.iter(insert_100k));
+    group.bench_function(&format!("insert_bulk_{}", word_count), |b| b.iter(insert_bulk));
     group.bench_function("lookup", |b| b.iter(lookup));
-    group.bench_function("build_100k", |b| b.iter(build_100k));
+    group.bench_function(&format!("build_bulk_{}", word_count), |b| b.iter(build_bulk));
 
     memory_footprint();
 }

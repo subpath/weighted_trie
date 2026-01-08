@@ -13,11 +13,26 @@ categories = ["compression", "data-structures"]
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
+hashbrown = "0.14"
+smallvec = "1.13"
+compact_str = "0.8"
 
 [dev-dependencies]
 criterion = "0.4.0"
 lazy_static = "1.4.0"
+memory-stats = "1.0.0"
+stats_alloc = "0.1.10"
+
+[profile.release]
+opt-level = 3
+lto = "thin"
+codegen-units = 1
+panic = "abort"
 
 [[bench]]
 name = "bench"
+harness = false
+
+[[bench]]
+name = "memory_bench"
 harness = false

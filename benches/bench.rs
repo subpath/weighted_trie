@@ -95,7 +95,10 @@ fn criterion_benchmark(c: &mut Criterion) {
     let word_count = *WORD_COUNT;
 
     if is_ci {
-        println!("\n⚠️  Running benchmarks in CI mode with {} words\n", word_count);
+        println!(
+            "\n⚠️  Running benchmarks in CI mode with {} words\n",
+            word_count
+        );
     } else {
         println!("\n✓ Running benchmarks with {} words\n", word_count);
     }
@@ -107,9 +110,11 @@ fn criterion_benchmark(c: &mut Criterion) {
 
     // Bulk operations - lower sample size
     group.sample_size(10);
-    group.bench_function(&format!("insert_bulk_{}", word_count), |b| b.iter(insert_bulk));
+    group.bench_function(format!("insert_bulk_{}", word_count), |b| {
+        b.iter(insert_bulk)
+    });
     group.bench_function("lookup", |b| b.iter(lookup));
-    group.bench_function(&format!("build_bulk_{}", word_count), |b| b.iter(build_bulk));
+    group.bench_function(format!("build_bulk_{}", word_count), |b| b.iter(build_bulk));
 
     memory_footprint();
 }

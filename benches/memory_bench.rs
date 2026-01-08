@@ -38,7 +38,7 @@ fn get_net_allocated() -> usize {
 
 fn load_data(path: &str, count: usize) -> Vec<WeightedString> {
     let path = Path::new(path);
-    let contents = fs::read_to_string(&path).unwrap();
+    let contents = fs::read_to_string(path).unwrap();
     let mut data = Vec::new();
 
     for line in contents.lines().take(count) {

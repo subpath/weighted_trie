@@ -223,7 +223,10 @@ fn test_overlapping_prefixes() {
     trie.insert("tester", 3);
     trie.insert("tested", 4);
 
-    assert_eq!(trie.search("test"), vec!["tested", "tester", "testing", "test"]);
+    assert_eq!(
+        trie.search("test"),
+        vec!["tested", "tester", "testing", "test"]
+    );
     assert_eq!(trie.search("testi"), vec!["testing"]);
     assert_eq!(trie.search("teste"), vec!["tested", "tester"]);
 }

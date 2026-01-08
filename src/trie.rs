@@ -59,7 +59,11 @@ impl Children {
             }
             Self::Small(vec) => {
                 #[cold]
-                fn transition_to_large(vec: &mut SmallVec<[(char, NodeIndex); SMALL_CHILDREN_CAPACITY]>, c: char, idx: NodeIndex) -> Children {
+                fn transition_to_large(
+                    vec: &mut SmallVec<[(char, NodeIndex); SMALL_CHILDREN_CAPACITY]>,
+                    c: char,
+                    idx: NodeIndex,
+                ) -> Children {
                     let mut map: HashMap<_, _> = vec.drain(..).collect();
                     map.insert(c, idx);
                     Children::Large(map)
@@ -221,15 +225,25 @@ impl WeightedTrie {
         Self::build_with_config(weighted_strings, MAX_WORD_LENGTH, MAX_SUGGESTIONS_PER_NODE)
     }
 
-    pub fn build_with_max_word_length(weighted_strings: Vec<WeightedString>, max_word_length: usize) -> Self {
+    pub fn build_with_max_word_length(
+        weighted_strings: Vec<WeightedString>,
+        max_word_length: usize,
+    ) -> Self {
         Self::build_with_config(weighted_strings, max_word_length, MAX_SUGGESTIONS_PER_NODE)
     }
 
-    pub fn build_with_max_suggestions(weighted_strings: Vec<WeightedString>, max_suggestions: usize) -> Self {
+    pub fn build_with_max_suggestions(
+        weighted_strings: Vec<WeightedString>,
+        max_suggestions: usize,
+    ) -> Self {
         Self::build_with_config(weighted_strings, MAX_WORD_LENGTH, max_suggestions)
     }
 
-    pub fn build_with_config(weighted_strings: Vec<WeightedString>, max_word_length: usize, max_suggestions: usize) -> Self {
+    pub fn build_with_config(
+        weighted_strings: Vec<WeightedString>,
+        max_word_length: usize,
+        max_suggestions: usize,
+    ) -> Self {
         let count = weighted_strings.len();
         let mut trie = Self {
             nodes: Vec::with_capacity((count * 2).max(1000)),
